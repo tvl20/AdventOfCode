@@ -8,7 +8,6 @@ internal class Program
         Part2();
     }
 
-
     private static void Part2()
     {
         List<List<char>> wordList = LoadInput();
@@ -31,6 +30,26 @@ internal class Program
         }
 
         Console.WriteLine("Part2: " + foundWords);
+    }
+
+    // todo: fix orientation representation; x=y y=x but it somehow still worked
+    private static void Part1()
+    {
+        List<List<char>> wordList = LoadInput();
+        int foundWords = 0;
+
+        for (int x = 0; x < wordList.Count; x++)
+        {
+            for (int y = 0; y < wordList[x].Count; y++)
+            {
+                if (wordList[x][y] == 'X')
+                {
+                    foundWords += FindXMAS(x, y, wordList);
+                }
+            }
+        }
+
+        Console.WriteLine("Part1: " + foundWords);
     }
 
     private static bool HasXMASPattern(int x, int y, List<List<char>> wordList)
@@ -61,26 +80,6 @@ internal class Program
         Console.WriteLine("Diagonal2: " + diagonal2);
 
         return diagonal1 && diagonal2;
-    }
-
-    // todo: fix orientation representation; x=y y=x but it somehow still worked
-    private static void Part1()
-    {
-        List<List<char>> wordList = LoadInput();
-        int foundWords = 0;
-
-        for (int x = 0; x < wordList.Count; x++)
-        {
-            for (int y = 0; y < wordList[x].Count; y++)
-            {
-                if (wordList[x][y] == 'X')
-                {
-                    foundWords += FindXMAS(x, y, wordList);
-                }
-            }
-        }
-
-        Console.WriteLine("Part1: " + foundWords);
     }
 
     private static int FindXMAS(int x, int y, List<List<char>> wordList)
