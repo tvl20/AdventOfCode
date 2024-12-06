@@ -5,6 +5,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+        Part1();
         Part2();
     }
 

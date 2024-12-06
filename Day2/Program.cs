@@ -81,7 +81,6 @@ internal class Program
                 alt2.RemoveAt(i);
                 return IsSafeAscDamped(alt1, true) || IsSafeAscDamped(alt2, true);
             }
-
         }
 
         return true;
