@@ -2,7 +2,7 @@
 {
     public static StreamReader GetInputReader()
     {
-        string inputPath = $"{Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent}/input.txt";
+        string inputPath = $"{Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent}/Default/input.txt";
         return new StreamReader(inputPath);
     }
 }
