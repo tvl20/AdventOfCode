@@ -1,5 +1,6 @@
 ﻿
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
@@ -26,16 +27,16 @@ internal class Program
 
         stopwatch.Reset();
         stopwatch.Start();
-        string diskMap = DiskMapFromInput(input);
+        List<long> diskMap = DiskMapFromInput(input);
         stopwatch.Stop();
-        //Console.WriteLine("DiskMap: " + diskMap);
+        Console.WriteLine("DiskMap: " + ListToString(diskMap));
         Console.WriteLine("Generate Diskmap: " + stopwatch.ElapsedMilliseconds + "ms");
 
         stopwatch.Reset();
         stopwatch.Start();
-        string compressedDiskMap = CompressDiskMap(diskMap);
+        List<long> compressedDiskMap = CompressDiskMap(diskMap);
         stopwatch.Stop();
-        //Console.WriteLine("Compressed: " + compressedDiskMap);
+        Console.WriteLine("Compressed: " + ListToString(compressedDiskMap));
         Console.WriteLine("Compress Diskmap: " + stopwatch.ElapsedMilliseconds + "ms");
 
         stopwatch.Reset();
@@ -46,32 +47,32 @@ internal class Program
         Console.WriteLine("Generate Checksum: " + stopwatch.ElapsedMilliseconds + "ms");
     }
 
-    private static long GenerateDiskChecksum(string input)
+    private static long GenerateDiskChecksum(List<long> input)
     {
         long checksum = 0;
 
-        for (int i = 0; i < input.Length; i++)
+        for (int i = 0; i < input.Count; i++)
         {
-            checksum += int.Parse(input[i].ToString()) * i;
+            checksum += input[i] * i;
         }
 
         return checksum;
     }
 
-    private static string CompressDiskMap(string diskmap)
+    private static List<long> CompressDiskMap(List<long> diskmap)
     {
-        LinkedList<char> list = new LinkedList<char>(diskmap);
+        LinkedList<long> list = new LinkedList<long>(diskmap);
 
-        while (list.Contains('.'))
+        while (list.Contains(-1))
         {
-            LinkedListNode<char>? firstGap = list.Find('.');
+            LinkedListNode<long> firstGap = list.Find(-1);
 
-            LinkedListNode<char>? lastData;
+            LinkedListNode<long> lastData;
             do
             {
                 lastData = list.Last;
                 list.RemoveLast();
-            } while (lastData?.Value == '.');
+            } while (lastData?.Value == -1);
 
             if (firstGap.List != null)
             {
@@ -84,27 +85,35 @@ internal class Program
             }
         }
 
-        return string.Join("", list);
+        return list.ToList();
     }
 
-    private static string DiskMapFromInput(string input)
+    private static List<long> DiskMapFromInput(string input)
     {
-        StringBuilder stringBuilder = new StringBuilder();
+        List<long> diskmap = new();
 
         // Todo improve this, its shitty but should suffice for now
-        int currentId = 0;
+        long currentId = 0;
         bool isFreeSpace = false;
         foreach (char c in input)
         {
-            for (int i = 0; i < int.Parse(c.ToString()); i++)
-            {
-                stringBuilder.Append(isFreeSpace ? "." : currentId);
-            }
+            int i = int.Parse(c.ToString());
+            diskmap.AddRange(Enumerable.Repeat(isFreeSpace ? -1 : currentId, i));
 
             if (!isFreeSpace) currentId++;
             isFreeSpace = !isFreeSpace;
         }
 
-        return stringBuilder.ToString();
+        return diskmap;
+    }
+
+    private static string ListToString<T>(List<T> list)
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (T item in list)
+        {
+            sb.Append(item.ToString());
+        }
+        return sb.ToString();
     }
 }
