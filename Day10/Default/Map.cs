@@ -1,4 +1,4 @@
-﻿public class Map<T>
+﻿public class Map<T> where T : struct
 {
     public int MapWidth => map[0].Count;
     public int MapHeight => map.Count;
@@ -20,7 +20,7 @@
                 map.Add(new());
                 foreach (char c in line)
                 {
-                    map[map.Count - 1].Add((T)Convert.ChangeType(c, typeof(T)));
+                    map[map.Count - 1].Add((T)Convert.ChangeType("" + c, typeof(T)));
                 }
             }
         }
@@ -32,5 +32,24 @@
         bool yValid = pos.Y >= 0 && pos.Y < MapHeight;
 
         return xValid && yValid;
+    }
+
+    public List<Position> FindAll(T value)
+    {
+        List<Position> list = new List<Position>();
+
+        for (int y = 0; y < MapHeight; y++)
+        {
+            for (int x = 0; x < MapWidth; x++)
+            {
+                Position pos = new Position(x, y);
+                if (this[pos].Equals(value))
+                {
+                    list.Add(pos);
+                }
+            }
+        }
+
+        return list;
     }
 }
