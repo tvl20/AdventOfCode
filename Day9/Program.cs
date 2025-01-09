@@ -10,7 +10,10 @@ internal class Program
     private static void Main(string[] args)
     {
         // The example works but not the actual input??
-        //Part1();
+        Console.WriteLine("---- part 1 ----");
+        Part1();
+
+        Console.WriteLine("---- part 2 ----");
         Part2();
     }
 
@@ -31,14 +34,14 @@ internal class Program
         stopwatch.Start();
         List<DiskNode> diskMap = DiskMapFromInputPart2(input);
         stopwatch.Stop();
-        Console.WriteLine("DiskMap: " + ListToString(diskMap));
+        // Console.WriteLine("DiskMap: " + ListToString(diskMap));
         Console.WriteLine("Generate Diskmap: " + stopwatch.ElapsedMilliseconds + "ms");
 
         stopwatch.Reset();
         stopwatch.Start();
         List<DiskNode> compressedDiskMap = CompressDiskMapPart2(diskMap);
         stopwatch.Stop();
-        Console.WriteLine("Compressed: " + ListToString(compressedDiskMap));
+        // Console.WriteLine("Compressed: " + ListToString(compressedDiskMap));
         Console.WriteLine("Compress Diskmap: " + stopwatch.ElapsedMilliseconds + "ms");
 
         stopwatch.Reset();
@@ -66,14 +69,14 @@ internal class Program
         stopwatch.Start();
         List<long> diskMap = DiskMapFromInputPart1(input);
         stopwatch.Stop();
-        Console.WriteLine("DiskMap: " + ListToString(diskMap));
+        // Console.WriteLine("DiskMap: " + ListToString(diskMap));
         Console.WriteLine("Generate Diskmap: " + stopwatch.ElapsedMilliseconds + "ms");
 
         stopwatch.Reset();
         stopwatch.Start();
         List<long> compressedDiskMap = CompressDiskMapPart1(diskMap);
         stopwatch.Stop();
-        Console.WriteLine("Compressed: " + ListToString(compressedDiskMap));
+        // Console.WriteLine("Compressed: " + ListToString(compressedDiskMap));
         Console.WriteLine("Compress Diskmap: " + stopwatch.ElapsedMilliseconds + "ms");
 
         stopwatch.Reset();
@@ -90,7 +93,7 @@ internal class Program
 
         for (int i = 0; i < input.Count; i++)
         {
-            checksum += input[i] * i;
+            if (input[i] > 0) checksum += input[i] * i;
         }
 
         return checksum;
@@ -99,47 +102,37 @@ internal class Program
     // something goes fucky in that it only does 1 iteration??
     private static List<DiskNode> CompressDiskMapPart2(List<DiskNode> diskmap)
     {
-        LinkedList<DiskNode> list = new LinkedList<DiskNode>(diskmap.ToList());
+        List<DiskNode> result = new List<DiskNode>(diskmap.ToList());
 
-        for (int i = list.Count - 1; i >= 0; i--)
+        for (int i = result.Count - 1; i >= 0; i--)
         {
-            LinkedListNode<DiskNode> lastNode = list.Last; // get lastNode node
-            while (lastNode.Value.ID == -1) // trim all empty from the end
+            // get lastDataNode node
+            DiskNode lastDataNode = result[i];
+            if (lastDataNode.ID == -1) // trim all empty from the end
             {
-                list.RemoveLast();
-                lastNode = list.Last;
-                i--; // move indexer down to adjust for removing item
+                continue;
             }
 
             // check if it can be placed anywhere
-            LinkedListNode<DiskNode> checkNode = list.First;
-            bool valueUpdated = false;
-            while (checkNode != null && !checkNode.Equals(lastNode) && !valueUpdated) // move up until you're at the pos you're checking
+            for (int j = 0; j < i; j++)
             {
-                // free space found, that is bigger or equal size
-                if (checkNode.Value.ID == -1 && checkNode.Value.Size >= lastNode.Value.Size)
+                DiskNode checkNode = result[j];
+                if (checkNode.ID == -1 && checkNode.Size >= lastDataNode.Size)
                 {
-                    list.Remove(lastNode);
-                    list.AddBefore(checkNode, lastNode);
+                    // set input to empty space to keep original position
+                    result[i] = new DiskNode(-1, lastDataNode.Size);
 
-                    int restSize = checkNode.Value.Size - lastNode.Value.Size;
-                    if (restSize > 0)
-                    {
-                        checkNode.Value.ResizeTo(restSize);
-                    }
-                    else
-                    {
-                        list.Remove(checkNode);
-                    }
+                    checkNode.ResizeTo(checkNode.Size - lastDataNode.Size); // resize free space
+                    if (checkNode.Size <= 0) result.RemoveAt(j); // remove if filled up completely
 
-                    valueUpdated = true;
+                    result.Insert(j, lastDataNode); // move data into free space
+                    break;
                 }
-
-                checkNode = checkNode.Next;
             }
+
         }
 
-        return list.ToList();
+        return result;
     }
 
     private static List<DiskNode> DiskMapFromInputPart2(string input)
