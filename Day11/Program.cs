@@ -5,16 +5,6 @@ using System.Text;
 
 internal class Program
 {
-    private static string ListToString<T>(List<T> list, string seperator = "")
-    {
-        StringBuilder sb = new StringBuilder();
-        foreach (T item in list)
-        {
-            sb.Append(item.ToString() + seperator);
-        }
-        return sb.ToString();
-    }
-
     private static void Main(string[] args)
     {
         SolvePart1();
