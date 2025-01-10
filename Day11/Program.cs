@@ -1,4 +1,5 @@
 ﻿
+using Day11;
 using System.Diagnostics;
 using System.Text;
 
@@ -17,6 +18,12 @@ internal class Program
     private static void Main(string[] args)
     {
         SolvePart1();
+
+        Console.WriteLine(" ---- part 2 ---- ");
+
+        BigSolver solver = new BigSolver();
+        long totalStones = solver.DetermineStoneAmount();
+        Console.WriteLine("TOTAL: " + totalStones);
     }
 
     private static void SolvePart1()
@@ -55,7 +62,7 @@ internal class Program
 
     }
 
-    private static List<long> LoadStones()
+    public static List<long> LoadStones()
     {
         List<long> stones = new List<long>();
         string input = "";
@@ -73,7 +80,7 @@ internal class Program
         return stones;
     }
 
-    private static List<long> BlinkStone(long stoneValue)
+    public static List<long> BlinkStone(long stoneValue)
     {
         List<long> list = new List<long>();
 
