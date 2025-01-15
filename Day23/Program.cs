@@ -30,16 +30,17 @@ internal class Program
         sw.Start();
 
         HashSet<string> biggestSet = new HashSet<string>();
-        foreach (string initialConnection in connections.Keys)
-        ////for (int i = 0; i < connections.Keys.Count; i++) 
-        //while (connections.Count > 0) 
+        //foreach (string initialConnection in connections.Keys)
+        //for (int i = 0; i < connections.Keys.Count; i++) 
+        while (connections.Count > 0) 
         {
             string startingNode = connections.Keys.First();
             HashSet<string> set = GetBiggestLoop(connections, startingNode, new());
-            connections.Remove(startingNode);
 
             if (set.Count > biggestSet.Count) 
-                biggestSet = set;
+                biggestSet = new HashSet<string>(set.ToList());
+
+            connections.Remove(startingNode);
 
             sw.Stop();
             Console.WriteLine(" Time: " + sw.ElapsedMilliseconds + "ms");
@@ -53,8 +54,10 @@ internal class Program
         Console.WriteLine(output);
     }
 
-    private static HashSet<string> GetBiggestLoop(Dictionary<string, List<string>> connectionMap, string currentConnection, HashSet<string> previousConnections)
+    private static HashSet<string> GetBiggestLoop(Dictionary<string, List<string>> connectionMap, 
+        string currentConnection, HashSet<string> previousConnections)
     {
+        if (!connectionMap.ContainsKey(currentConnection)) return previousConnections;
         if (previousConnections.Contains(currentConnection)) return previousConnections;
         if (connectionMap[currentConnection].Intersect(previousConnections).Count() != previousConnections.Count) return previousConnections;
         
