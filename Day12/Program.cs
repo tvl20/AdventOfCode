@@ -67,6 +67,8 @@ internal class Program
                 FindAllConnectingRegions(map, neighbour, ref region);
             }
         }
+
+        // TODO: check if bordering the edge of the map, those also count as perimiter points
     }
 
     private static string ListToString<T>(List<T> list, string seperator = "")
