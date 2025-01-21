@@ -18,6 +18,13 @@ public class Position
         Y = y;
     }
 
+    public float AbsoluteDifference(Position other)
+    {
+        return MathF.Sqrt(
+            MathF.Exp(MathF.Abs(other.X - X)) +
+            MathF.Exp(MathF.Abs(other.Y - Y)));
+    }
+
     public static Position operator +(Position original, Direction dir)
     {
         switch (dir)
