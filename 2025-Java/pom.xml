@@ -13,6 +13,16 @@
         <module>input-reader</module>
         <module>day1</module>
         <module>day2</module>
+        <module>day3</module>
+        <module>day4</module>
+        <module>day5</module>
+        <module>day6</module>
+        <module>day7</module>
+        <module>day8</module>
+        <module>day9</module>
+        <module>day10</module>
+        <module>day11</module>
+        <module>day12</module>
     </modules>
 
     <properties>
