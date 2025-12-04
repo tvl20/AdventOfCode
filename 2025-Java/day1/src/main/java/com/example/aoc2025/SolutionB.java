@@ -30,12 +30,6 @@ public class SolutionB {
         } else if (rotation.startsWith("L")) {
             applyRotation(-degrees);
         }
-
-        // check if ending on zero if so add a point
-        if (currentRotation == 0) {
-            System.out.println(" ending on 0, numb " + pointsAtZero);
-            pointsAtZero++;
-        }
     }
 
     private void applyRotation(int rotation) {
@@ -45,15 +39,23 @@ public class SolutionB {
         if (currentRotation < 0) {
             System.out.println("rolling forward " + currentRotation + " as " + (currentRotation - rotation) + " was moved by " + rotation);
             currentRotation += 100;
+            // only add a point if we passed 0, not if we landed on it or started from it
             if (!startedAtZero && currentRotation != 0) {
                 pointsAtZero++;
             }
         } else if (currentRotation > 99) {
             System.out.println("rolling forward " + currentRotation + " as " + (currentRotation - rotation) + " was moved by " + rotation);
             currentRotation -= 100;
+            // only add a point if we passed 0, not if we landed on it or started from it
             if (!startedAtZero && currentRotation != 0) {
                 pointsAtZero++;
             }
+        }
+
+        // check if ending on zero if so add a point
+        if (currentRotation == 0) {
+            System.out.println(" ending on 0, numb " + pointsAtZero);
+            pointsAtZero++;
         }
     }
 

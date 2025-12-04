@@ -8,8 +8,8 @@ public class Main {
     static void main() {
         puzzleInput = PuzzleInputReader.lines();
 
-//        SolutionA a = new SolutionA(puzzleInput);
-//        a.Solve();
+        SolutionA a = new SolutionA(puzzleInput);
+        a.solve();
 
         SolutionB b = new SolutionB(puzzleInput);
         b.solve();
