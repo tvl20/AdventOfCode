@@ -11,21 +11,23 @@ public class SolutionB {
         long answer = 0;
 
         for (long[] range : ranges) {
-            answer += calculateFaultyCodesBruteforce(range);
+            answer += calculateInvalidIds(range);
         }
 
         return answer;
     }
 
-    public long calculateFaultyCodesBruteforce(long[] pair) {
+    public long calculateInvalidIds(long[] pair) {
         long smallest = Math.min(pair[0], pair[1]);
         long biggest = Math.max(pair[0], pair[1]);
         long faults = 0;
 
         for (long i = smallest; i <= biggest; i++) {
-            String number = i + "";
+            String number = Long.toString(i);
 
-            if (!isValidID(number)) faults += Long.parseLong(number);
+            if (!isValidID(number)) {
+                faults += i;
+            }
         }
 
         return faults;

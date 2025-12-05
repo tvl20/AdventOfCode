@@ -31,6 +31,22 @@ public class PuzzleInputReader {
     }
 
     /**
+     * Read input.txt file located in the caller's resources folder, using lines()
+     *
+     * @return a grid of characters representing the input file
+     */
+    public static char[][] grid() {
+        List<String> lines = lines();
+        char[][] grid = new char[lines.size()][];
+
+        for (int i = 0; i < lines.size(); i++) {
+            grid[i] = lines.get(i).toCharArray();
+        }
+
+        return grid;
+    }
+
+    /**
      * Find what module called the input reader
      * Then use the classpath of the caller to load input from the resources
      *

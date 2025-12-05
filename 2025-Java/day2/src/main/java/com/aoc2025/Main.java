@@ -13,9 +13,9 @@ public class Main {
             rangePairs[i] = new long[]{Long.parseLong(pair[0]), Long.parseLong(pair[1])};
         }
 
-        SolutionA solutionA = new SolutionA(rangePairs);
-        long result = solutionA.solve();
-        System.out.println("result of Solution A is " + result);
+//        SolutionA solutionA = new SolutionA(rangePairs);
+//        long result = solutionA.solve();
+//        System.out.println("result of Solution A is " + result);
 
         SolutionB solutionB = new SolutionB(rangePairs);
         long resultB = solutionB.solve();
