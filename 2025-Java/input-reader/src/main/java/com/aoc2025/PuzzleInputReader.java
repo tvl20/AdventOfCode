@@ -3,6 +3,7 @@ package com.aoc2025;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PuzzleInputReader {
@@ -28,6 +29,28 @@ public class PuzzleInputReader {
         } catch (IOException e) {
             throw new RuntimeException("Issue reading file: " + INPUT_FILE_NAME, e);
         }
+    }
+
+    /**
+     * Read input.txt file located in the caller's resources folder, using lines()
+     *
+     * @return a list of lists that were separated by empty lines in the input file
+     */
+    public static List<List<String>> multiList() {
+        List<String> lines = lines();
+
+        List<List<String>> separateLists = new ArrayList<>();
+        separateLists.add(new ArrayList<>());
+
+        for (String line : lines) {
+            if (line.isEmpty()) {
+                separateLists.add(new ArrayList<>());
+            } else {
+                separateLists.getLast().add(line);
+            }
+        }
+
+        return separateLists;
     }
 
     /**

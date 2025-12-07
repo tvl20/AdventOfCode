@@ -17,6 +17,7 @@ public class Main {
 //        long result = solutionA.solve();
 //        System.out.println("result of Solution A is " + result);
 
+        // still too high??
         SolutionB solutionB = new SolutionB(rangePairs);
         long resultB = solutionB.solve();
         System.out.println("result of Solution B is " + resultB);
