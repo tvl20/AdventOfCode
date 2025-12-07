@@ -6,9 +6,9 @@ public class Main {
     static void main() {
         List<String> input = PuzzleInputReader.lines();
 
-//        SolutionA solutionA = new SolutionA(rangePairs);
-//        long result = solutionA.solve();
-//        System.out.println("result of Solution A is " + result);
+        SolutionA solutionA = new SolutionA(input);
+        long result = solutionA.solve();
+        System.out.println("result of Solution A is " + result);
 //
 //        SolutionB solutionB = new SolutionB(rangePairs);
 //        long resultB = solutionB.solve();
