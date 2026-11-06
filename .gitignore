@@ -6,7 +6,7 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # for some reason misc.xml wasnt included
-**/.idea/**/misc.xml
+**/.idea/misc.xml
 
 
 # User-specific stuff
