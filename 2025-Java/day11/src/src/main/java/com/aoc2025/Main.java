@@ -1,0 +1,17 @@
+package com.aoc2025;
+
+import java.util.List;
+
+public class Main {
+    static void main() {
+        List<String> input = PuzzleInputReader.lines();
+
+//        SolutionA solutionA = new SolutionA(rangePairs);
+//        long result = solutionA.solve();
+//        System.out.println("result of Solution A is " + result);
+//
+//        SolutionB solutionB = new SolutionB(rangePairs);
+//        long resultB = solutionB.solve();
+//        System.out.println("result of Solution B is " + resultB);
+    }
+}
